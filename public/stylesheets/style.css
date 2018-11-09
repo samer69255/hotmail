@@ -1,0 +1,48 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#emails {
+   margin: 10px 0px;
+    height: 240px;
+    width: 478px;
+    font-size: 14px;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    padding: 6px 8px;
+        cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    background-color: #fafbfc;
+}
+
+.hide {
+    display: none;
+}
+
+#ckeck {
+       background-color: #008000;
+    outline: none;
+    color: #eaeaea;
+    border-color: #ff0909;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+    font-size: 16px;
+    height: 50px;
+    width: 70px;
+}
+
+#ckeck :active, #ckeck :focus {
+    border:0.5em solid #00c; /* here configure as your needs */
+     color:#00c;
+}
+
+#eStat {
+    color:orangered;
+}
