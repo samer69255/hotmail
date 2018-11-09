@@ -9,9 +9,11 @@
     var emails = text.split(/\n+/);
     if (emails.length == 0) return;
     var emails2 = [];
-    emails.forEach(function (key) {
-        if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push(key);
-    });
+    for (var i in emails) {
+        var key = emails[key];
+        if (key.indexOf("com.ar") > -1) continue;
+          if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push(key);
+        }
     this.value = emails2.join('\n').trim();
     });
     
