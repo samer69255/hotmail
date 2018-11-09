@@ -136,6 +136,7 @@ async function ckeckH(email) {
      //console.log(json);
     if (json.apiCanary)
      ss.canary = json.apiCanary;
+     else console.log(json);
      return json.isAvailable;
 }
 
