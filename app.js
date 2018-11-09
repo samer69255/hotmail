@@ -134,8 +134,8 @@ async function ckeckH(email) {
    var res = await fetch('https://signup.live.com/API/CheckAvailableSigninNames?lic=1', options);
    var json = await res.json();
      //console.log(json);
-    
-     ss.canary = json.apiCanary || json.telemetryContext;
+    if (json.apiCanary)
+     ss.canary =unescapeJs(json.apiCanary);
     
      return json.isAvailable;
 }
