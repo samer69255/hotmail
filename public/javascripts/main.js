@@ -10,7 +10,7 @@
     if (emails.length == 0) return;
     var emails2 = [];
     for (var i in emails) {
-        var key = emails[key];
+        var key = emails[i];
         if (key.indexOf("com.ar") > -1) continue;
           if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push(key);
         }
