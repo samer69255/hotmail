@@ -14,7 +14,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', async function(req, res, next) {
-
+ ss = {}
+         cookie = "";
+         su = [];
+         eml = "working";
     
 console.log(req.body);
     ems = req.body.ems;
@@ -25,6 +28,12 @@ console.log(req.body);
         eml = key;
         var ch = await ckeckH(key);
         console.log(key + ' => '+ ch);
+        if (ch == 'error1')
+            {
+                await Init();
+                i + i - 1;
+                continue;
+            }
         if (ch == true) su.push(eml);
     }
     ems = [];
@@ -39,10 +48,7 @@ router.get('/chk', function(req, res) {
 function Init() {
     return new Promise(resolve => {
         
-         ss = {}
-         cookie = "";
-         su = [];
-         eml = "working";
+        
         
         fetch('https://signup.live.com/?lic=1')
         .then(res => {
@@ -97,8 +103,9 @@ async function ckeckH(email) {
 }
     
    var res = await fetch('https://signup.live.com/API/CheckAvailableSigninNames?lic=1', options);
-   if (res.status != '200') return undefined;
+   if (res.status != '200') {console.log('error 1');  return 'error1' };
    var json = await res.json().catch(e => {
+       console.log('error 2');
        json = {}
    });
     // console.log(res.status);
