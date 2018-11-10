@@ -42,8 +42,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-<<<<<<< HEAD
-=======
 function Init() {
     return new Promise(resolve => {
         
@@ -112,7 +110,6 @@ async function ckeckH(email) {
     
      return json.isAvailable;
 }
->>>>>>> 4820ee93a2270588d6c7d653bc5e7c25f0d653f7
 
 async function Check(emails) {
     await Init();
