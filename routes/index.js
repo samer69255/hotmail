@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var fetch = require('node-fetch');
-var requset = require('request');
+var request = require('request');
 
 var unescapeJs = require("unescape-js");
 
@@ -28,13 +28,21 @@ console.log(req.body);
         var key = ems[i];
         eml = key;
         await time(1000);
-        var ch = await ckeckH(key);
+        try {
+            var ch = await ckeckH(key);
+        } catch (e) {
+            throw e;
+        }
         console.log(key + ' => '+ ch);
-        if (ch == 'error1')
+        if (ch == 'error')
             {
                 await(2000);
-                await Init();
-                i + i - 1;
+                try {
+                    await Init();
+                } catch (e) {
+                    throw e;
+                }
+                i = i - 1;
                 continue;
             }
         if (ch == true) {su.ems.push(eml);
@@ -56,12 +64,11 @@ function Init() {
     return new Promise(resolve => {
         
         
-        
-        fetch('https://signup.live.com/?lic=1')
-        .then(res => {
-            res.text()
-            .then(body => {
-                    console.log('working');
+        request.get('https://signup.live.com/?lic=1', (err, respone, body) => {
+            if (err) {
+                console.log('initing ...');
+                return Init();  };
+            console.log('working');
     var uaid = body.match(/"uaid":"(.*?)"/)[1],
         uiflvr = body.match(/"uiflvr":(\d+)/)[1],
         scid = body.match(/"scid":(\d+)/)[1],
@@ -76,8 +83,7 @@ function Init() {
         canary:unescapeJs(canary)
     }
     
-    var Cookies = res.headers.get('set-cookie');
-    if (typeof Cookies == 'string') Cookies = [Cookies];
+    var Cookies = respone.headers['set-cookie'];
     Cookies.forEach(key => {
         var cc = key.split(' ')[0];
         cookie += " " + cc;
@@ -85,11 +91,8 @@ function Init() {
     cookie = cookie.trim();
     //console.log(cookie);
     resolve();
-            });
         });
         
-//            requset.get('https://signup.live.com/?lic=1', (err, response, body) => {
-//});
 
     });
 
@@ -97,11 +100,13 @@ function Init() {
 
 
 async function ckeckH(email) {
-    var data = {signInName:email,uaid:ss.uaid,includeSuggestions:true,uiflvr:ss.uiflvr,scid:ss.scid,hpgid:ss.hpgid}
+    
+    return new Promise(resolve => {
+          var data = {signInName:email,uaid:ss.uaid,includeSuggestions:true,uiflvr:ss.uiflvr,scid:ss.scid,hpgid:ss.hpgid}
    // console.log(data);
     var options = {
-    method:"POST",
-    body:JSON.stringify(data),
+    url:'https://signup.live.com/API/CheckAvailableSigninNames?lic=1',
+    json:(data),
     headers:{
         'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
         'Cookie':cookie,
@@ -109,23 +114,20 @@ async function ckeckH(email) {
 }
 }
     
-   var res = await fetch('https://signup.live.com/API/CheckAvailableSigninNames?lic=1', options)
-   .catch(err => {
-      return ckeckH(email);
-   });
-   if (res.status != '200') {console.log('error 1');  return 'error1' };
-   var json = await res.json().catch(e => {
-       console.log('error 2');
-       json = {}
-   });
-    // console.log(res.status);
-//    if (json.isAvailable == undefined) console.log(json, email);
-//    if (json.error) {
-//        
-//    }
-     if (json.apiCanary)
-     ss.canary = json.apiCanary;
-     return json.isAvailable;
+    request.post(options, (err, response, body) => {
+        if (err) {
+            
+            return resolve('int');
+        }
+        if (response.statusCode != '200') return resovle('error');
+        if (body.apiCanary)
+     ss.canary = body.apiCanary;
+      resolve(body.isAvailable);
+      console.log(body);
+    });
+     
+    });
+  
 }
 
 async function time(dd) {
