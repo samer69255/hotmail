@@ -5,6 +5,7 @@
     ems.addEventListener('paste', function(e) {
     e.preventDefault();
      var  clipboardData = e.clipboardData || window.clipboardData;
+<<<<<<< HEAD
     var text = clipboardData.getData('Text');
         
     var emails = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -14,6 +15,17 @@
         var key = emails[i];
                 if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push(key);
     }
+=======
+    var text = clipboardData.getData('Text').trim().replace(/\s/g, "");
+    var emails = text.split(/\n+/);
+    if (emails.length == 0) return;
+    var emails2 = [];
+    for (var i in emails) {
+        var key = emails[i];
+        if (key.indexOf("com.ar") > -1) continue;
+          if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push( key );
+        }
+>>>>>>> 4820ee93a2270588d6c7d653bc5e7c25f0d653f7
     this.value = emails2.join('\n').trim();
     });
     
