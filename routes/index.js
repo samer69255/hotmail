@@ -27,7 +27,7 @@ console.log(req.body);
     for (var i in ems) {
         var key = ems[i];
         eml = key;
-        await time(dd);
+        await time(1000);
         var ch = await ckeckH(key);
         console.log(key + ' => '+ ch);
         if (ch == 'error1')
