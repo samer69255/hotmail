@@ -98,7 +98,9 @@ async function ckeckH(email) {
     
    var res = await fetch('https://signup.live.com/API/CheckAvailableSigninNames?lic=1', options);
    if (res.status != '200') return undefined;
-   var json = await res.json();
+   var json = await res.json().catch(e => {
+       json = {}
+   });
     // console.log(res.status);
 //    if (json.isAvailable == undefined) console.log(json, email);
 //    if (json.error) {
