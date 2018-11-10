@@ -6,12 +6,14 @@
     e.preventDefault();
      var  clipboardData = e.clipboardData || window.clipboardData;
     var text = clipboardData.getData('Text');
-    var emails = text.split(/\n+/);
-    if (emails.length == 0) return;
+        
+    var emails = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+    if (emails == null || emails.length == 0) return;
     var emails2 = [];
-    emails.forEach(function (key) {
-        if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push(key);
-    });
+    for (var i in emails) {
+        var key = emails[i];
+                if (key.indexOf('@hotmail') > -1 || key.indexOf('@outlook') > -1 || key.indexOf('@live') > -1 )  emails2.push(key);
+    }
     this.value = emails2.join('\n').trim();
     });
     
@@ -20,8 +22,8 @@
         if (value.length < 7) return;
         document.getElementById('main1').className = 'hide'
         document.getElementById('main2').className = '';
-        var emails = value.split(/\n+/);
-        emails = JSON.stringify({ems:emails});
+        var emails5 = value.split(/\n+/);
+        emails5 = JSON.stringify({ems:emails5});
         
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -30,7 +32,7 @@
         }
         xhr.open('POST', '/');
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(emails);
+        xhr.send(emails5);
         
         
     });
