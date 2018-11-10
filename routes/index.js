@@ -16,16 +16,18 @@ router.get('/', function(req, res, next) {
 router.post('/', async function(req, res, next) {
  ss = {}
          cookie = "";
-         su = [];
+         su = {ems:[], u:0, f:0, t:0, len:0};
          eml = "working";
     
 console.log(req.body);
     ems = req.body.ems;
+    su.len = ems.length;
     res.end('');
     await Init();
     for (var i in ems) {
         var key = ems[i];
         eml = key;
+        await time();
         var ch = await ckeckH(key);
         console.log(key + ' => '+ ch);
         if (ch == 'error1')
@@ -34,7 +36,11 @@ console.log(req.body);
                 i + i - 1;
                 continue;
             }
-        if (ch == true) su.push(eml);
+        if (ch == true) {su.ems.push(eml);
+            su.t++;  
+        }
+        else if (ch == false) {  su.f++; }
+        else su.u++;
     }
     ems = [];
     
@@ -102,7 +108,10 @@ async function ckeckH(email) {
 }
 }
     
-   var res = await fetch('https://signup.live.com/API/CheckAvailableSigninNames?lic=1', options);
+   var res = await fetch('https://signup.live.com/API/CheckAvailableSigninNames?lic=1', options)
+   .catch(err => {
+      return ckeckH(email);
+   });
    if (res.status != '200') {console.log('error 1');  return 'error1' };
    var json = await res.json().catch(e => {
        console.log('error 2');
@@ -116,6 +125,14 @@ async function ckeckH(email) {
      if (json.apiCanary)
      ss.canary = json.apiCanary;
      return json.isAvailable;
+}
+
+async function time() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        },500);
+    });
 }
 
 

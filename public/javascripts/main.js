@@ -23,6 +23,7 @@
         document.getElementById('main1').className = 'hide'
         document.getElementById('main2').className = '';
         var emails5 = value.split(/\n+/);
+        console.log(emails5.length);
         emails5 = JSON.stringify({ems:emails5});
         
         var xhr = new XMLHttpRequest();
@@ -45,11 +46,11 @@
                 var ob = JSON.parse(text);
                 
                 s.innerHTML = ob.eml;
-                console.log(ob);
-                su.value = ob.su.join('\n');
+                su.value = ob.su.ems.join('\n');
                 if (ob.len == 0) {
                     clearInterval(Interval);
                     s.innerHTML = 'complte';
+                    alert('تم ادخال : ' + ob.su.len + '\nعدد المتاح : ' + ob.su.t + '\nعدد الغير متاح : ' + ob.su.f + '\nالحالة غير معروفة : ' + ob.su.u);
                 }
             }
             xhr.open('get', '/chk');
