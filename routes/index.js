@@ -27,11 +27,12 @@ console.log(req.body);
     for (var i in ems) {
         var key = ems[i];
         eml = key;
-        await time();
+        await time(dd);
         var ch = await ckeckH(key);
         console.log(key + ' => '+ ch);
         if (ch == 'error1')
             {
+                await(2000);
                 await Init();
                 i + i - 1;
                 continue;
@@ -127,11 +128,11 @@ async function ckeckH(email) {
      return json.isAvailable;
 }
 
-async function time() {
+async function time(dd) {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve();
-        },800);
+        },dd);
     });
 }
 
