@@ -131,7 +131,7 @@ async function time() {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve();
-        },500);
+        },800);
     });
 }
 
